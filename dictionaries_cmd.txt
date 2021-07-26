@@ -1,0 +1,10 @@
+apple	quả táo
+banana	quả chuối
+eight	tám
+five	năm
+four	bốn
+one	một
+seven	bảy
+six	sáu
+three	ba
+two	hai
