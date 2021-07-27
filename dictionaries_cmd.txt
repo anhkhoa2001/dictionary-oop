@@ -8,3 +8,4 @@ seven	bảy
 six	sáu
 three	ba
 two	hai
+khoa dep trai    khoas

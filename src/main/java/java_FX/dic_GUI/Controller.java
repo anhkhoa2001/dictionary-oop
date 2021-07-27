@@ -1,19 +1,22 @@
 package java_FX.dic_GUI;
 
-import java_FX.dic_cmd.Word;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -26,6 +29,15 @@ public class Controller implements Initializable {
     private WebView output;
 
     @FXML
+    private TextField addEnglish, removeWord;
+
+    @FXML
+    private TextArea addVietnamese;
+
+    @FXML
+    private Button btnAdd, btnRemove;
+
+    @FXML
     private Button btnSearch;
 
     @FXML
@@ -34,45 +46,54 @@ public class Controller implements Initializable {
     @FXML
     private Button btnExit;
 
-    private ArrayList<String> array = new ArrayList<>();
+    private ArrayList<String> arrayTarget = new ArrayList<>();
 
-    private ArrayList<Word> words = new ArrayList<>();
+    private ArrayList<String> arrayExplain = new ArrayList<>();
+
+    private ObservableList<String> observableList = FXCollections.observableList(arrayTarget);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        insertFromFile();
-        separationWord();
-        getWordtolist();
+        insertFromFile();// lay tu
+        getWordtolist();// them tu tieng anh vao myList
         btnSearch.setDisable(true);
+        btnAdd.setDisable(true);
+        btnRemove.setDisable(true);
         handle();
     }
-
+    public void addWordtoFile() {
+        try {
+            Files.write(Paths.get("dictionaries.txt"), (arrayTarget.get(arrayTarget.size()-1) + "\t" + arrayExplain.get(arrayExplain.size()-1) + "\n").getBytes(), StandardOpenOption.APPEND);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void removeWordtoFile() {
+        try {
+            File file = new File("dictionaries.txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            for(int i=0; i<arrayTarget.size(); i++) {
+                String str = arrayTarget.get(i) + "\t" +arrayExplain.get(i);
+                bw.write(str);
+                bw.newLine();
+            }
+            bw.close();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     public void loadHTMLtoWebView() {
         WebEngine webEngine = output.getEngine();
         String str = input1.getText();
-        System.out.println(str);
-        String out;
-        for(int i=0; i<words.size(); i++) {
-            if(str.equals(words.get(i).getWord_target())) {
-                webEngine.loadContent(words.get(i).getWord_explain());
-                System.out.println(words.get(i).getWord_explain());
+        for(int i=0; i<arrayTarget.size(); i++) {
+            if(str.equals(arrayTarget.get(i))) {
+                webEngine.loadContent(arrayExplain.get(i));
             }
         }
     }
     public void getWordtolist() {
-        for (int i=0; i<words.size(); i++) {
-            myList.getItems().add(words.get(i).getWord_target());
-        }
+        myList.setItems(observableList);
     }
-
-    public void separationWord() {
-        for(String str:array){
-            String[] w = str.split("\t");
-            Word word = new Word(w[0], w[1]);
-            words.add(word);
-        }
-    }
-
 
     public void insertFromFile() {
         try {
@@ -80,11 +101,59 @@ public class Controller implements Initializable {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String str;
             while ((str = br.readLine()) != null) {
-                array.add(str);
+                String[] w = str.split("\t");
+                arrayTarget.add(w[0]);
+                arrayExplain.add(w[1]);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    public void eventADD() {
+        addEnglish.textProperty().addListener((observableValue, s, t1) -> {
+            btnAdd.setDisable(t1.trim().isEmpty());
+        });
+        addVietnamese.textProperty().addListener((observableValue, s, t1) -> {
+            btnAdd.setDisable(t1.trim().isEmpty());
+        });
+    }
+
+    @FXML
+    public void eventBtnAdd() {
+        arrayTarget.add(addEnglish.getText());
+        arrayExplain.add(addVietnamese.getText());
+        addWordtoFile();
+        addEnglish.clear();
+        addVietnamese.clear();
+    }
+
+    @FXML
+    public void eventCancel() {
+        addEnglish.clear();
+        addVietnamese.clear();
+        removeWord.clear();
+    }
+
+    @FXML
+    public void eventBtnRemove() {
+        String str = removeWord.getText();
+        for(int i=0; i<arrayTarget.size(); i++) {
+            if(str.equals(arrayTarget.get(i))){
+                arrayTarget.remove(i);
+                arrayExplain.remove(i);
+            }
+        }
+        removeWordtoFile();
+        removeWord.clear();
+    }
+
+    @FXML
+    public void eventRemove() {
+        removeWord.textProperty().addListener((observableValue, s, t1) -> {
+            btnRemove.setDisable(t1.trim().isEmpty());
+        });
     }
 
     @FXML
@@ -93,22 +162,22 @@ public class Controller implements Initializable {
             btnSearch.setDisable(newValue.trim().isEmpty());
             ArrayList<String> arrayWord = new ArrayList<String>();
             if(!newValue.trim().isEmpty()) {
-                for(int i=0; i<array.size(); i++) {
-                    if(words.get(i).getWord_target().contains(newValue)) {
-                        myList.getItems().clear();
-                        arrayWord.add(words.get(i).getWord_target());
+                for(int i=0; i<arrayTarget.size(); i++) {
+                    if(arrayTarget.get(i).toLowerCase().contains(newValue)) {
+                        arrayWord.add(arrayTarget.get(i));
                     }
                 }
-                myList.getItems().addAll(arrayWord);
+                ObservableList<String> obser = FXCollections.observableList(arrayWord);
+                myList.setItems(obser);
             }
             else if(newValue.equals(" ") || newValue.equals("\t")) {
                 //
             }
             else {
-                myList.getItems().clear();
                 getWordtolist();
             }
         });
+        input1.clear();
     }
 
     @FXML
