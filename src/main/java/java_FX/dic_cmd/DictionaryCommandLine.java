@@ -14,7 +14,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
         }
     }
     public void menuDictionary() {
-        super.insertFromFile();
+        super.insertFromFile(super.getsFile());
         System.out.println("---------------MENU---------------");
         System.out.println("1.Thêm từ vựng");
         System.out.println("2.Xóa từ vựng");
@@ -57,7 +57,7 @@ public class DictionaryCommandLine extends DictionaryManagement {
     }
     //export to output.txt
     public void dictionaryExportToFile() {
-        super.insertFromFile();
+        super.insertFromFile(super.getsFile());
         try {
             File file = new File("output.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));

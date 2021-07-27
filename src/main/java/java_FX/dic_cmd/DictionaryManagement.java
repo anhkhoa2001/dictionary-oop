@@ -8,6 +8,13 @@ import java.util.Scanner;
 
 public class DictionaryManagement extends Dictionary {
     public Scanner sc = new Scanner(System.in);
+    private String sFile = "dictionaries_cmd.txt";
+    public String getsFile() {
+        return sFile;
+    }
+    public void setsFile(String sFile) {
+        this.sFile = sFile;
+    }
     public void dictionaryLookup() {
         int count = -1;
         System.out.print("Nhập từ bạn muốn tra cứu: ");
@@ -46,9 +53,9 @@ public class DictionaryManagement extends Dictionary {
             System.out.println("Từ khóa không có trong từ điển!!");
         }
     }
-    public void insertFromFile() {
+    public void insertFromFile(String strFile) {
         try {
-            File file = new File("dictionaries_cmd.txt");
+            File file = new File(strFile);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String str;
             while ((str = br.readLine()) != null) {
@@ -60,9 +67,9 @@ public class DictionaryManagement extends Dictionary {
             System.out.println(e);
         }
     }
-    public void updateWordtoFile(ArrayList<Word> words) {
+    public void updateWordtoFile(ArrayList<Word> words, String strFile) {
         try {
-            File file = new File("dictionaries_cmd.txt");
+            File file = new File(strFile);
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             ArrayList<String> array = new ArrayList<>();
             for(int i=0; i<words.size(); i++) {
@@ -95,7 +102,7 @@ public class DictionaryManagement extends Dictionary {
         else {
             System.out.println("Bạn đã xóa từ thất bại!!");
         }
-        updateWordtoFile(super.getWords());
+        updateWordtoFile(super.getWords(), sFile);
     }
     public void addWordfromFile() {
         int countWord = super.getWords().size();
@@ -111,6 +118,6 @@ public class DictionaryManagement extends Dictionary {
             System.out.println("Bạn đã thêm từ thành công!!");
         }
         else System.out.println("Bạn đã thêm từ thất bại!!");
-        updateWordtoFile(super.getWords());
+        updateWordtoFile(super.getWords(), sFile);
     }
 }
