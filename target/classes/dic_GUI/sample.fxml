@@ -20,19 +20,9 @@
          </font>
       </TextField>
       <ListView fx:id="myList" layoutX="24.0" layoutY="68.0" onMouseClicked="#handleMyList" prefHeight="682.0" prefWidth="256.0" />
-      <Button fx:id="btnExit" layoutX="931.0" layoutY="23.0" mnemonicParsing="false" onAction="#eventExit" text="Exit">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnSearch" layoutX="317.0" layoutY="23.0" mnemonicParsing="false" text="Search">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <TabPane layoutX="317.0" layoutY="68.0" prefHeight="682.0" prefWidth="658.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutX="317.0" layoutY="68.0" prefHeight="682.0" prefWidth="658.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Home">
+          <Tab fx:id="tab_home" text="Home">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -41,7 +31,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Add">
+          <Tab fx:id="tab_add" text="Add">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -71,7 +61,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Remove">
+            <Tab fx:id="tab_remove" text="Remove">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -95,7 +85,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Google Translate">
+            <Tab fx:id="tab_translate" text="Google Translate">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -120,12 +110,18 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <ImageView fx:id="image_sound_trans" fitHeight="20.0" fitWidth="20.0" layoutX="246.0" layoutY="396.0" onMouseClicked="#eventImgSound_Trans" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
         </tabs>
       </TabPane>
-      <ImageView fx:id="image1" fitHeight="42.0" fitWidth="42.0" layoutX="439.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_home" fitHeight="42.0" fitWidth="42.0" layoutX="317.0" layoutY="17.0" onMouseClicked="#eventImgHome" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_add" fitHeight="42.0" fitWidth="42.0" layoutX="379.0" layoutY="17.0" onMouseClicked="#eventImgAdd" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_remove" fitHeight="42.0" fitWidth="42.0" layoutX="441.0" layoutY="17.0" onMouseClicked="#eventImgRemove" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_translate" fitHeight="42.0" fitWidth="42.0" layoutX="503.0" layoutY="17.0" onMouseClicked="#eventImgTranslate" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_exit" fitHeight="42.0" fitWidth="42.0" layoutX="933.0" layoutY="17.0" onMouseClicked="#eventExit" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image_sound" fitHeight="20.0" fitWidth="20.0" layoutX="253.0" layoutY="26.0" onMouseClicked="#eventImgSound" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
