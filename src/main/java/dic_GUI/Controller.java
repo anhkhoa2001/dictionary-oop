@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
@@ -28,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    private ImageView image1;
+    private ImageView image_home, image_add, image_remove, image_exit, image_translate, image_sound, image_sound_trans;
 
     @FXML
     private TextField input1;
@@ -43,13 +40,19 @@ public class Controller implements Initializable {
     private TextArea addVietnamese;
 
     @FXML
-    private Button btnAdd, btnRemove, btnSearch, btnTranslate, btnExit;
+    private Button btnAdd, btnRemove, btnTranslate, btnExit;
 
     @FXML
     private ListView<String> myList;
 
     @FXML
     private TextArea inputTranslate, outputTranslate;
+
+    @FXML
+    private TabPane tabPane;
+
+    @FXML
+    private Tab tab_home, tab_add, tab_remove, tab_translate;
 
     private ArrayList<String> arrayTarget = new ArrayList<>();
 
@@ -61,21 +64,32 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         insertFromFile();// lay tu
         getWordtolist();// them tu tieng anh vao myList
-        btnSearch.setDisable(true);
         btnAdd.setDisable(true);
         btnRemove.setDisable(true);
         inputTranslate.setWrapText(true);
         outputTranslate.setWrapText(true);
-        File file = new File("home_icon_2.png");
+        setImage();
+        handle();
+    }
+    public void setImage() {
+        exportImage("home_icon_2.png", image_home);
+        exportImage("add_icon.png", image_add);
+        exportImage("icon_remove.png", image_remove);
+        exportImage("icon-exit.png", image_exit);
+        exportImage("icon_sound.jpg", image_sound);
+        exportImage("translate-icon.png", image_translate);
+        exportImage("icon_sound.jpg", image_sound_trans);
+    }
+    public void exportImage(String str, ImageView image) {
+        File file = new File(str);
         try {
             String url1 = file.toURI().toURL().toString();
             Image img = new Image(url1);
-            image1.setImage(img);
+            image.setImage(img);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
-        handle();
     }
     public void addWordtoFile() {
         try {
@@ -175,7 +189,6 @@ public class Controller implements Initializable {
     @FXML
     public void handle() {
         input1.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            btnSearch.setDisable(newValue.trim().isEmpty());
             ArrayList<String> arrayWord = new ArrayList<String>();
             if(!newValue.trim().isEmpty()) {
                 for(int i=0; i<arrayTarget.size(); i++) {
@@ -205,8 +218,33 @@ public class Controller implements Initializable {
 
     @FXML
     public void eventExit() {
-        Stage stage = (Stage) btnExit.getScene().getWindow();
+        Stage stage = (Stage) image_exit.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    public void eventImgHome() {
+        tabPane.getSelectionModel().select(tab_home);
+    }
+    @FXML
+    public void eventImgAdd() {
+        tabPane.getSelectionModel().select(tab_add);
+    }
+    @FXML
+    public void eventImgRemove() {
+        tabPane.getSelectionModel().select(tab_remove);
+    }
+    @FXML
+    public void eventImgTranslate() {
+        tabPane.getSelectionModel().select(tab_translate);
+    }
+
+    @FXML
+    public void eventImgSound() {
+    }
+
+    @FXML
+    public void eventImgSound_Trans() {
     }
 
     @FXML
