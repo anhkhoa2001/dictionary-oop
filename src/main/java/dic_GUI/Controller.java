@@ -1,4 +1,4 @@
-package java_FX.dic_GUI;
+package dic_GUI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

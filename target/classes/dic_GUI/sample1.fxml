@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_FX.dic_GUI.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dic_GUI.Controller">
    <children>
       <TextField fx:id="input1" layoutX="27.0" layoutY="22.0" onMouseClicked="#handle" prefHeight="35.0" prefWidth="327.0">
          <font>
@@ -25,9 +25,6 @@
       <TabPane layoutX="394.0" layoutY="76.0" prefHeight="664.0" prefWidth="587.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Home">
-               <content>
-                  <WebView fx:id="output" prefHeight="166.0" prefWidth="51.0" />
-               </content>
                <content />
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0" />
