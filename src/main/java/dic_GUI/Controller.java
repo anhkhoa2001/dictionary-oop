@@ -28,25 +28,19 @@ public class Controller implements Initializable {
     private ImageView image_home, image_add, image_remove, image_exit, image_translate, image_sound, image_sound_trans;
 
     @FXML
-    private TextField input1;
+    private TextField input1, addEnglish, removeWord;
 
     @FXML
     private WebView output;
 
     @FXML
-    private TextField addEnglish, removeWord;
+    private TextArea addVietnamese, inputTranslate, outputTranslate;
 
     @FXML
-    private TextArea addVietnamese;
-
-    @FXML
-    private Button btnAdd, btnRemove, btnTranslate, btnExit;
+    private Button btnAdd, btnRemove, btnTranslate;
 
     @FXML
     private ListView<String> myList;
-
-    @FXML
-    private TextArea inputTranslate, outputTranslate;
 
     @FXML
     private TabPane tabPane;
@@ -62,24 +56,33 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        renderDic();
+    }
+    public void renderDic() {
         insertFromFile();// lay tu
         getWordtolist();// them tu tieng anh vao myList
+        setDis(); // trang thai cho button area
+        setImage(); // them anh
+        handle(); // tra tu
+    }
+
+    public void setDis() {
         btnAdd.setDisable(true);
         btnRemove.setDisable(true);
         inputTranslate.setWrapText(true);
         outputTranslate.setWrapText(true);
-        setImage();
-        handle();
     }
+
     public void setImage() {
-        exportImage("home_icon_2.png", image_home);
-        exportImage("add_icon.png", image_add);
-        exportImage("icon_remove.png", image_remove);
-        exportImage("icon-exit.png", image_exit);
-        exportImage("icon_sound.jpg", image_sound);
-        exportImage("translate-icon.png", image_translate);
-        exportImage("icon_sound.jpg", image_sound_trans);
+        exportImage("src/main/resources/img/home_icon_2.png", image_home);
+        exportImage("src/main/resources/img/add_icon.png", image_add);
+        exportImage("src/main/resources/img/icon_remove.png", image_remove);
+        exportImage("src/main/resources/img/icon-exit.png", image_exit);
+        exportImage("src/main/resources/img/icon_sound.jpg", image_sound);
+        exportImage("src/main/resources/img/translate-icon.png", image_translate);
+        exportImage("src/main/resources/img/icon_sound.jpg", image_sound_trans);
     }
+
     public void exportImage(String str, ImageView image) {
         File file = new File(str);
         try {
