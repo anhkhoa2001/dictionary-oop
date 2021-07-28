@@ -1,18 +1,23 @@
 package dic_GUI;
 
+import com.darkprograms.speech.translator.GoogleTranslate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,6 +27,9 @@ import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
+    @FXML
+    private ImageView image1;
+
     @FXML
     private TextField input1;
 
@@ -35,16 +43,13 @@ public class Controller implements Initializable {
     private TextArea addVietnamese;
 
     @FXML
-    private Button btnAdd, btnRemove;
-
-    @FXML
-    private Button btnSearch;
+    private Button btnAdd, btnRemove, btnSearch, btnTranslate, btnExit;
 
     @FXML
     private ListView<String> myList;
 
     @FXML
-    private Button btnExit;
+    private TextArea inputTranslate, outputTranslate;
 
     private ArrayList<String> arrayTarget = new ArrayList<>();
 
@@ -59,6 +64,17 @@ public class Controller implements Initializable {
         btnSearch.setDisable(true);
         btnAdd.setDisable(true);
         btnRemove.setDisable(true);
+        inputTranslate.setWrapText(true);
+        outputTranslate.setWrapText(true);
+        File file = new File("home_icon_2.png");
+        try {
+            String url1 = file.toURI().toURL().toString();
+            Image img = new Image(url1);
+            image1.setImage(img);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         handle();
     }
     public void addWordtoFile() {
@@ -191,5 +207,14 @@ public class Controller implements Initializable {
     public void eventExit() {
         Stage stage = (Stage) btnExit.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    public void eventTranslateEng(Event event) {
+        try {
+            outputTranslate.setText(GoogleTranslate.translate("en", "vi", inputTranslate.getText()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

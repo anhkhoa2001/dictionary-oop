@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="apiGoogle">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../DictionaryMiniProject-master/DictionaryGUI/src/main/java/Google API/apiGoogle.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

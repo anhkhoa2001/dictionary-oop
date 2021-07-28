@@ -9,3 +9,4 @@ six	sáu
 three	ba
 two	hai
 khoa dep trai    khoas
+khoa dep trai    khoas
