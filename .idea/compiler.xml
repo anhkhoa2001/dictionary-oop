@@ -16,11 +16,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="dictionary_FX" />
+        <module name="dictionary_FX_notMV" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dictionary_FX" target="1.8" />
+      <module name="dictionary_FX_notMV" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

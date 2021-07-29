@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dic_GUI.Controller">
+<AnchorPane fx:id="bgArchorPane" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../../resources/css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dic_GUI.Controller">
    <children>
       <TextField fx:id="input1" layoutX="24.0" layoutY="21.0" onMouseClicked="#handle" prefHeight="30.0" prefWidth="256.0">
          <font>
