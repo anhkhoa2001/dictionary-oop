@@ -1,6 +1,8 @@
 package dic_GUI;
 
 import com.darkprograms.speech.translator.GoogleTranslate;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -53,6 +55,8 @@ public class Controller implements Initializable {
     private ArrayList<String> arrayExplain = new ArrayList<>();
 
     private ObservableList<String> observableList = FXCollections.observableList(arrayTarget);
+
+    private final String sName = "kevin16";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -143,6 +147,24 @@ public class Controller implements Initializable {
         }
     }
 
+    public boolean constainArray(String str) {
+        ArrayList<String> array = new ArrayList<>();
+        for(int i=0; i<arrayTarget.size(); i++) {
+            String s = arrayTarget.get(i) + "\t" + arrayExplain.get(i);
+            array.add(s);
+        }
+        int count = 0;
+        for(String s1:array) {
+            if(s1.equals(str)) {
+                count++;
+            }
+        }
+        if(count==0) {
+            return false;
+        }
+        return true;
+    }
+
     @FXML
     public void eventADD() {
         addEnglish.textProperty().addListener((observableValue, s, t1) -> {
@@ -155,11 +177,27 @@ public class Controller implements Initializable {
 
     @FXML
     public void eventBtnAdd() {
-        arrayTarget.add(addEnglish.getText());
-        arrayExplain.add(addVietnamese.getText());
-        addWordtoFile();
-        addEnglish.clear();
-        addVietnamese.clear();
+        String str = addEnglish.getText() + "\t" + addVietnamese.getText();
+        if(constainArray(str)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification");
+            alert.setHeaderText(null);
+            alert.setContentText("Thêm từ thất bại!");
+            alert.showAndWait();
+        }
+        else {
+            arrayTarget.add(addEnglish.getText());
+            arrayExplain.add(addVietnamese.getText());
+            addWordtoFile();
+            addEnglish.clear();
+            addVietnamese.clear();
+            System.out.println(arrayTarget.size());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification");
+            alert.setHeaderText(null);
+            alert.setContentText("Thêm từ thành công!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -180,6 +218,11 @@ public class Controller implements Initializable {
         }
         removeWordtoFile();
         removeWord.clear();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Notification");
+        alert.setHeaderText(null);
+        alert.setContentText("Xóa từ thành công!");
+        alert.showAndWait();
     }
 
     @FXML
@@ -244,10 +287,28 @@ public class Controller implements Initializable {
 
     @FXML
     public void eventImgSound() {
+        try {
+            System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+            VoiceManager vm  = VoiceManager.getInstance();
+            Voice voice = vm.getVoice("kevin16");
+            voice.allocate();
+            voice.speak(input1.getText());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @FXML
     public void eventImgSound_Trans() {
+        try {
+            System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+            VoiceManager vm  = VoiceManager.getInstance();
+            Voice voice = vm.getVoice("kevin16");
+            voice.allocate();
+            voice.speak(inputTranslate.getText());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @FXML
